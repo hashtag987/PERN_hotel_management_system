@@ -3,15 +3,19 @@ import { styles } from "../styles/alogin.css";
 import axios from "axios";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-const ALogin = () => {
+import { Link, useNavigate } from "react-router-dom";
+const ALogin = ({ DOMAIN }) => {
+  const navigate = useNavigate();
+  if (sessionStorage["authToken"] !== undefined) {
+    navigate("/admin/dashboard");
+  }
+
   const [data, setData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
-
-  //   const navigate = useNavigate();
 
   const generateError = (err) =>
     toast.error(err, {
@@ -21,12 +25,10 @@ const ALogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:5000/adminlogin";
-      const { data: res } = await axios.post(url, data);
-      //localStorage.setItem("token", res.data);
-      //window.location = "/";
-      //navigate("/board");
-      console.log("success");
+      const url = DOMAIN + "/adminlogin";
+      const res = await axios.post(url, data);
+      sessionStorage["authToken"] = res.data.authToken;
+      navigate("/admin/dashboard");
     } catch (error) {
       console.log(error.response.data.message);
       if (
@@ -41,8 +43,10 @@ const ALogin = () => {
   };
   return (
     <div className="main-admin">
+      <Link to="/" className="link-logo"><h4>Froyo Grande</h4></Link>
       <div className="box-form">
         <div className="inner-box">
+          <h3 className="admin-header">Hey Admin</h3>
           {/* <img src={logger} className="carousel-login" /> */}
           <div className="forms-wrap-login" onSubmit={handleSubmit}>
             <form className="form-horizontal">
@@ -63,7 +67,7 @@ const ALogin = () => {
                   <input
                     type="password"
                     className="input-field"
-                    autocomplete="off"
+                    autoComplete="new-password"
                     placeholder="Password"
                     name="password"
                     onChange={handleChange}
@@ -77,7 +81,7 @@ const ALogin = () => {
           </div>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

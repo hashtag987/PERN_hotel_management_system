@@ -78,6 +78,7 @@ SELECT c.class_id,class_name, count(*), class_price FROM rooms r inner join clas
 --     ALTER COLUMN test_id TYPE INTEGER[]
 --     USING array[test_id]::INTEGER[];
 ALTER TABLE rooms ADD CONSTRAINT fk_rooms_classes FOREIGN KEY (class_id) REFERENCES classes(class_id);
+-- select classes.class_id as id, class_name as name, count(room_no) as roomcount from rooms join classes on rooms.class_id = classes.class_id where isavailable = 't' or room_no in (select room_no from rooms join reservation on rooms.room_no = any(reservation.rooms) where date_out < '2022-07-31' ) group by classes.class_id , class_name order by classes.class_id;
 -- ALTER TABLE customers ALTER COLUMN customer_id TYPE bigserial PRIMARY KEY;
 SELECT c.class_id,class_name, count(*), class_price FROM rooms r inner join classes c on c.class_id = r.class_id WHERE r.isavailable = '1' GROUP BY c.class_id ORDER BY c.class_id;
 /*
@@ -110,3 +111,5 @@ SELECT c.class_id,class_name, count(*), class_price FROM rooms r inner join clas
 
     INSERT INTO customers(c_first_name,c_last_name,email) values('Jack', 'Dan','Jack@examples.com'),('Joe', 'Biden','Joe@examples.com'),('John', 'Doe','John@examples.com');
 */
+
+select rooms.room_no from rooms join classes on rooms.class_id = classes.class_id where class_name = 'double' and (isavailable = 't' or room_no in (select room_no from rooms join reservation on rooms.room_no = any(reservation.rooms) where date_out < '2022-07-31' ));

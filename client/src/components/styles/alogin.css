@@ -1,4 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+@font-face {
+  font-family: admin;
+  src: url("../../utils/fonts/froyo.otf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: getstarted;
+  src: url("../../utils/fonts/services.otf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: ser-con;
+  src: url("../../utils/fonts/Coco-Gothic-Light-trial.ttf");
+}
+
+@font-face {
+  font-family: ser-con-btn;
+  src: url("../../utils/fonts/Metropolis-Light.otf");
+}
+
+@font-face {
+  font-family: ser-con-reg;
+  src: url("../../utils/fonts/Coco-Gothic-Regular-trial.ttf");
+}
 *,
 *::before,
 *::after {
@@ -11,6 +37,10 @@ body{
   font-family: "Consolas";
 }
 
+.link-logo{
+  text-decoration: none;
+  
+}
 .main-admin {
   width: 100%;
   min-height: 100vh;
@@ -22,14 +52,21 @@ body{
   justify-content: center;
 }
 
+.main-admin h4{
+  font-family: admin;
+  position: absolute;
+  left:50px;
+  top:40px;
+}
+
 .box-form {
     position: relative;
     width: 100%;
-    max-width: 900px;
+    max-width: 650px;
     height: 520px;
     background-color: #d7d7d7;
     border-radius: 25px;
-    box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.27);
+    box-shadow: 0 60px 40px -30px rgba(45, 45, 45, 0.27);
   }
   
   .inner-box {
@@ -37,7 +74,17 @@ body{
     width: calc(100% - 4.1rem);
     height: calc(100% - 4.1rem);
     top: 50%;
-    left: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+  }
+
+  .inner-box .admin-header{
+    position: absolute;
+    font-family:admin;
+    width: calc(100% - 4.1rem);
+    height: calc(100% - 4.1rem);
+    top: 50%;
+    left: 60%;
     transform: translate(-50%, -50%);
   }
   
@@ -69,6 +116,7 @@ body{
   }
   
   .input-field {
+    font-family: ser-con-btn;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -83,10 +131,11 @@ body{
   }
   
   .sign-btn {
+    font-family: ser-con-btn;
     display: inline-block;
     width: 100%;
     height: 43px;
-    background-color: #151111;
+    background-color: #dad65c;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -99,6 +148,6 @@ body{
   .sign-btn:hover {
     background-color: #909090;
   }
-  
 
-   
+
+  

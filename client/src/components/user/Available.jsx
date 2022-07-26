@@ -3,31 +3,12 @@ import "../styles/home.css";
 import axios from "axios";
 
 const Available = (props) => {
-  const [rooms, setrooms] = useState([]);
-  const data = props.checkin;
-  const getAvailableRooms = async (e) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
-    try {
-      const availableRooms = await axios.post(
-        "http://localhost:5000/user/available", data
-      );
-      // console.log(availableRooms);
-      const jsonData = await availableRooms.data;
-      setrooms(jsonData);
-      // console.log(rooms.length);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(()=>{
-    getAvailableRooms();
-  },[])
+  const rooms = props.rooms;
   return (
-    <div className="container">
-      <h2 className="available-header">Yes, We have rooms for you</h2>
-      <ul className="responsive-table">
+    <div className="available-container">
+      <h2 className="available-header">{rooms.length===0?"No Rooms Available":"Yes, We have rooms for you"}</h2>
+      {rooms.length>0?(
+        <ul className="responsive-table">
         <li className="table-header">
           <div className="col col-1">Class ID</div>
           <div className="col col-2">Class Name</div>
@@ -35,22 +16,24 @@ const Available = (props) => {
           <div className="col col-4">Price</div>
         </li>
         {rooms.map((room) => (
-          <li className="table-row" key={room.class_id}>
+          <li className="table-row" key={room.id}>
             <div className="col col-1" data-label="Job Id">
-              {room.class_id}
+              {room.id}
             </div>
             <div className="col col-2" data-label="Customer Name">
-              {room.class_name}
+              {room.name}
             </div>
             <div className="col col-3" data-label="Amount">
-              {room.count}
+              {room.roomcount}
             </div>
             <div className="col col-4" data-label="Payment Status">
-              {room.class_price}
+              {room.price}
             </div>
           </li>
         ))}
       </ul>
+      ):<div/>}
+      
     </div>
   );
 };

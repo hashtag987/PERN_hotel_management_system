@@ -307,6 +307,12 @@ img{
 
 .btn{
     border-radius: 15px;
+    background-color: var(--yellow);
+    color: white;
+}
+
+.book-now-link{
+    text-decoration: none;
 }
 .book-form input[type = "submit"]{
     
@@ -379,6 +385,7 @@ img{
     padding: 5px 20px;
 }
 .room-text h3{
+    text-transform: capitalize;
     font-size: 24px;
     font-family: banner-con;
 }
@@ -597,7 +604,17 @@ img{
     z-index: 5;
 }
 
-.container {
+.available-container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.available-container-admin{
+    position: relative;
+    top: 100px;
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;

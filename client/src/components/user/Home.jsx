@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/home.css";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
-import hotel1 from "../styles/images/img1.jpg";
-import hotel2 from "../styles/images/img2.jpg";
-import hotel3 from "../styles/images/img3.jpg";
 import cus1 from "../styles/images/cus1.jpg";
 import cus2 from "../styles/images/cus2.jpg";
-import cus3 from "../styles/images/cus3.jpg";
 import Available from "./Available";
+import axios from "axios";
 
-const Home = () => {
-  const [checkin, setcheckin] = useState({
-    checkin:""
+const Home = ({ DOMAIN }) => {
+  const [dates, setDates] = useState({
+    checkin: new Date().toISOString().split("T")[0],
+    checkout: new Date(new Date().getTime() + 60 * 60 * 24 * 1000)
+      .toISOString()
+      .split("T")[0],
   });
+  const [rooms, setrooms] = useState([]);
   const [activeNav, setactiveNav] = useState(false);
-  const [availableRooms, setavailableRooms] = useState(false);
+  const [available, setavailable] = useState(false);
+  const [classes, setclasses] = useState([]);
   const toggeleNav = (e) => {
     e.preventDefault();
     setactiveNav(!activeNav);
@@ -23,16 +25,47 @@ const Home = () => {
 
   const toggleAvail = (e) => {
     e.preventDefault();
-    setavailableRooms(!availableRooms);
+    getAvailableRooms(e);
   };
 
   const handleChange = ({ currentTarget: input }) => {
-    setcheckin({ ...checkin, [input.name]: input.value });
-    console.log(checkin);
+    setDates({
+      checkin: input.value,
+      checkout: new Date(new Date(input.value).getTime() + 60 * 60 * 24 * 1000)
+        .toISOString()
+        .split("T")[0],
+    });
   };
-  
+
+  const getClasses = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    try {
+      const allclasses = await axios.get(DOMAIN + "/classes");
+      const jsonData = await allclasses.data;
+      setclasses([...jsonData]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getAvailableRooms = async (e) => {
+    try {
+      const availablerooms = await axios.post(
+        DOMAIN + "/user/available",
+        dates
+      );
+      const jsonData = await availablerooms.data.data;
+      setrooms([...jsonData]);
+      setavailable(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getClasses();
+  }, []);
   return (
-    <div classNameName="main-container">
+    <div className="main-container">
       {/* <!-- header --> */}
       <header className="header" id="header">
         <div className="head-top">
@@ -99,9 +132,6 @@ const Home = () => {
         </div>
         <div className="services-container">
           <article className="service">
-            {/* <div className = "service-icon">
-                        <Icon icon="fluent:food-24-filled" height="40" />
-                    </div> */}
             <div className="service-content">
               <Icon icon="fluent:food-24-filled" height="40" />
               <h2>Food Service/ Food Runner</h2>
@@ -119,11 +149,6 @@ const Home = () => {
             </div>
           </article>
           <article className="service">
-            {/* <div className = "service-icon">
-                        <span>
-                            <i className = "fas fa-swimming-pool"></i>
-                        </span>
-                    </div> */}
             <div className="service-content">
               <Icon icon="fa-solid:swimming-pool" height="40" />
               <h2>Refreshment</h2>
@@ -141,11 +166,6 @@ const Home = () => {
             </div>
           </article>
           <article className="service">
-            {/* <div className = "service-icon">
-                        <span>
-                            <i className = "fas fa-broom"></i>
-                        </span>
-                    </div> */}
             <div className="service-content">
               <Icon icon="fa6-solid:broom" height="25" />
               <h2>Housekeeping</h2>
@@ -163,11 +183,6 @@ const Home = () => {
             </div>
           </article>
           <article className="service">
-            {/* <div className = "service-icon">
-                        <span>
-                            <i className = "fas fa-door-closed"></i>
-                        </span>
-                    </div> */}
             <div className="service-content">
               <Icon icon="wpf:security-checked" height="40" />
               <h2>Room Security</h2>
@@ -190,35 +205,45 @@ const Home = () => {
       <div className="book">
         <form className="book-form">
           <div className="form-item">
-            <label for="checkin-date">Check In Date: </label>
-            <input type="date" id="chekin-date" />
+            <label htmlFor="checkin-date">Check In Date: </label>
+            <input
+              type="date"
+              name="checkin"
+              min={new Date().toISOString().split("T")[0]}
+              defaultValue={new Date().toISOString().split("T")[0]}
+              onChange={handleChange}
+              id="chekin-date"
+            />
           </div>
           <div className="form-item">
-            <label for="checkout-date">Check Out Date: </label>
+            <label htmlFor="checkout-date">Check Out Date: </label>
             <input
-              placeholder="Enter checkin"
-              type="text"
-              name="checkin"
-              onFocus={(e) => (e.target.type = "date")}
-              onBlur={(e) => (e.target.type = "text")}
-              value={checkin.date}
-              onChange={handleChange}
-              dateformat="yyyy-mm-dd"
-              className="input-form"
+              type="date"
+              min={
+                new Date(
+                  new Date(dates.checkin).getTime() + 60 * 60 * 24 * 1000
+                )
+                  .toISOString()
+                  .split("T")[0]
+              }
+              value={dates.checkout}
+              onChange={(e) => {
+                setDates({ ...dates, ["checkout"]: e.target.value });
+              }}
               id="chekout-date"
             />
           </div>
           <div className="form-item">
-            <label for="adult">Adults: </label>
-            <input type="number" min="1" value="1" id="adult" />
+            <label htmlFor="adult">Adults: </label>
+            <input type="number" min="1" defaultValue="1" id="adult" />
           </div>
           <div className="form-item">
-            <label for="children">Children: </label>
-            <input type="number" min="1" value="1" id="children" />
+            <label htmlFor="children">Children: </label>
+            <input type="number" min="1" defaultValue="1" id="children" />
           </div>
           <div className="form-item">
-            <label for="rooms">Rooms: </label>
-            <input type="number" min="1" value="1" id="rooms" />
+            <label htmlFor="rooms">Rooms: </label>
+            <input type="number" min="1" defaultValue="1" id="rooms" />
           </div>
           <div className="form-item">
             <input
@@ -231,135 +256,47 @@ const Home = () => {
         </form>
       </div>
 
-      <section>{availableRooms && <Available checkin={checkin} />}</section>
+      <section>
+        {available && <Available checkin={dates} rooms={rooms} />}
+      </section>
 
       <section className="rooms sec-width" id="rooms">
         <div className="title">
           <h2>rooms</h2>
         </div>
         <div className="rooms-container">
-          <article className="room">
-            <div className="room-image">{<img src={hotel1} />}</div>
-            <div className="room-text">
-              <h3>Luxury Rooms</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus exercitationem repellendus maxime ullam tempore
-                architecto provident unde expedita quam beatae, dolore eligendi
-                molestias sint tenetur incidunt voluptas. Unde corporis qui
-                iusto vitae. Aut nesciunt id iste, cum esse commodi nemo?
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-                corporis quasi officiis cumque, fugiat nostrum sunt, tempora
-                animi dicta laborum beatae ratione doloremque. Delectus odio sit
-                eius labore, atque quo?
-              </p>
-              <p className="rate">
-                <span>$99.00 /</span> Per Night
-              </p>
-              <button type="button" className="btn"><Link to="/book">Book now</Link>
-              </button>
-            </div>
-          </article>
-          <article className="room">
-            <div className="room-image">
-              <img src={hotel2} />
-            </div>
-            <div className="room-text">
-              <h3>Luxury Rooms</h3>
-              {/* <ul>
-                <li>
-                  <Icon icon="carbon:condition-point" className="bullet" />
-                  <span> </span>
-                  Lorem ipsum dolor sit amet.
-                </li>
-                <li>
-                  <Icon icon="carbon:condition-point" className="bullet" />
-                  <span> </span>
-                  Lorem ipsum dolor sit amet.
-                </li>
-                <li>
-                  <Icon icon="carbon:condition-point" className="bullet" />
-                  <span> </span>
-                  Lorem ipsum dolor sit amet.
-                </li>
-              </ul> */}
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus exercitationem repellendus maxime ullam tempore
-                architecto provident unde expedita quam beatae, dolore eligendi
-                molestias sint tenetur incidunt voluptas. Unde corporis qui
-                iusto vitae. Aut nesciunt id iste, cum esse commodi nemo?
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-                corporis quasi officiis cumque, fugiat nostrum sunt, tempora
-                animi dicta laborum beatae ratione doloremque. Delectus odio sit
-                eius labore, atque quo?
-              </p>
-              <p className="rate">
-                <span>$99.00 /</span> Per Night
-              </p>
-              <button type="button" className="btn">
-                book now
-              </button>
-            </div>
-          </article>
-          <article className="room">
-            <div className="room-image">
-              <img src={hotel3} />
-            </div>
-            <div className="room-text">
-              <h3>Luxury Rooms</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus exercitationem repellendus maxime ullam tempore
-                architecto provident unde expedita quam beatae, dolore eligendi
-                molestias sint tenetur incidunt voluptas. Unde corporis qui
-                iusto vitae. Aut nesciunt id iste, cum esse commodi nemo?
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-                corporis quasi officiis cumque, fugiat nostrum sunt, tempora
-                animi dicta laborum beatae ratione doloremque. Delectus odio sit
-                eius labore, atque quo?
-              </p>
-              <p className="rate">
-                <span>$99.00 /</span> Per Night
-              </p>
-              <button type="button" className="btn">
-                book now
-              </button>
-            </div>
-          </article>
-          <article className="room">
-            <div className="room-image">
-              <img src={hotel3} />
-            </div>
-            <div className="room-text">
-              <h3>Luxury Rooms</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Temporibus exercitationem repellendus maxime ullam tempore
-                architecto provident unde expedita quam beatae, dolore eligendi
-                molestias sint tenetur incidunt voluptas. Unde corporis qui
-                iusto vitae. Aut nesciunt id iste, cum esse commodi nemo?
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-                corporis quasi officiis cumque, fugiat nostrum sunt, tempora
-                animi dicta laborum beatae ratione doloremque. Delectus odio sit
-                eius labore, atque quo?
-              </p>
-              <p className="rate">
-                <span>$99.00 /</span> Per Night
-              </p>
-              <button type="button" className="btn">
-                book now
-              </button>
-            </div>
-          </article>
+          {classes.map((clas, idx) => (
+            <article className="room" key={idx}>
+              <div className="room-image">
+                {<img src={`${DOMAIN}/image/${clas.image}`} />}
+              </div>
+              <div className="room-text">
+                <h3>{clas.class_name}</h3>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Temporibus exercitationem repellendus maxime ullam tempore
+                  architecto provident unde expedita quam beatae, dolore
+                  eligendi molestias sint tenetur incidunt voluptas. Unde
+                  corporis qui iusto vitae. Aut nesciunt id iste, cum esse
+                  commodi nemo?
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
+                  corporis quasi officiis cumque, fugiat nostrum sunt, tempora
+                  animi dicta laborum beatae ratione doloremque. Delectus odio
+                  sit eius labore, atque quo?
+                </p>
+                <p className="rate">
+                  <span>${clas.class_price}.00 /</span> Per Night
+                </p>
+                <Link className="book-now-link" to={`/book?roomtype=${clas.class_name}`}>
+                  <button type="button" className="btn">
+                    Book now
+                  </button>
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -389,19 +326,6 @@ const Home = () => {
               <img src={cus2} />
               <span className="cus-name">Customer Name, Country</span>
             </div>
-            {/* <div className = "customer">
-                        <div className = "rating">
-                            <span><i className = "fas fa-star"></i></span>
-                            <span><i className = "fas fa-star"></i></span>
-                            <span><i className = "fas fa-star"></i></span>
-                            <span><i className = "fas fa-star"></i></span>
-                            <span><i className = "far fa-star"></i></span>
-                        </div>
-                        <h3>Nice Place</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat beatae veritatis provident eveniet praesentium veniam cum iusto distinctio esse, vero est autem, eius optio cupiditate?</p>
-                        <img src = {cus3}/>
-                        <span>Customer Name, Country</span>
-                    </div> */}
           </div>
         </div>
       </section>
