@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../styles/home.css";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
-import cus1 from "../styles/images/cus1.jpg";
-import cus2 from "../styles/images/cus2.jpg";
+import cus1 from "../styles/images/review1.jpg";
+import cus2 from "../styles/images/review2.jpg";
 import Available from "./Available";
 import axios from "axios";
 
@@ -66,7 +66,6 @@ const Home = ({ DOMAIN }) => {
   }, []);
   return (
     <div className="main-container">
-      {/* <!-- header --> */}
       <header className="header" id="header">
         <div className="head-top">
           <div className="site-name">Froyo Grande</div>
@@ -78,19 +77,16 @@ const Home = ({ DOMAIN }) => {
         <div className="head-bottom flex">
           <h2>NICE AND COMFORTABLE PLACE TO STAY</h2>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto est
-            quos veniam impedit numquam itaque voluptatum, dicta asperiores
-            accusamus, eligendi neque ut incidunt, modi harum molestiae atque
-            natus officia minima.
+            Esteemed guests are welcome to relax and unwind in a quiet and
+            elegant setting in the popular resort of India and enjoy a genuine
+            experience of leisure, pleasure, gastronomy and wellness within the
+            premises of the resort
           </p>
           <button type="button" className="head-btn">
             GET STARTED
           </button>
         </div>
       </header>
-      {/* <!-- end of header -->
-
-        <!-- side navbar --> */}
       <div className={!activeNav ? "sidenav" : "sidenav show"} id="sidenav">
         <span
           className="cancel-btn"
@@ -108,24 +104,20 @@ const Home = ({ DOMAIN }) => {
             <a href="#services">services</a>
           </li>
           <li>
+            <a href="#check">check availabilty</a>
+          </li>
+          <li>
             <a href="#rooms">rooms</a>
           </li>
           <li>
             <a href="#customers">customers</a>
           </li>
         </ul>
-        <button className="btn sign-up">sign up</button>
-        <button className="btn log-in">
-          <Link to="/alogin">Log in</Link>
-        </button>
+        <Link to="/alogin" className="admin-login-link">
+          <button className="btn log-in">Admin</button>
+        </Link>
       </div>
-      {/* <!-- end of side navbar --> */}
-
-      {/* <!-- fullscreen modal --> */}
       <div id="modal"></div>
-      {/* <!-- end of fullscreen modal --> */}
-
-      {/* <!-- body content  --> */}
       <section className="services sec-width" id="services">
         <div className="title">
           <h2>services</h2>
@@ -136,12 +128,12 @@ const Home = ({ DOMAIN }) => {
               <Icon icon="fluent:food-24-filled" height="40" />
               <h2>Food Service/ Food Runner</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Molestias blanditiis tempore officia accusamus asperiores. Illum
-                maxime eligendi necessitatibus laudantium iste nisi pariatur
-                doloremque ut illo similique voluptatum enim distinctio
-                perferendis, ad ipsam aspernatur omnis rem autem ex, reiciendis
-                corporis suscipit!
+                Our show kitchens and live stations add an element of theatre to
+                every dining experience. A generosity of space, lofty ceilings,
+                charming water bodies, an outdoor courtyard where one can dine
+                under the stars, an island bar, a private dining room cloaked in
+                glass and chic furnishings makes a truly welcoming area. The
+                defining factor, of course, is the food.
               </p>
               <button type="button" className="btn">
                 Know More
@@ -153,12 +145,12 @@ const Home = ({ DOMAIN }) => {
               <Icon icon="fa-solid:swimming-pool" height="40" />
               <h2>Refreshment</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Molestias blanditiis tempore officia accusamus asperiores. Illum
-                maxime eligendi necessitatibus laudantium iste nisi pariatur
-                doloremque ut illo similique voluptatum enim distinctio
-                perferendis, ad ipsam aspernatur omnis rem autem ex, reiciendis
-                corporis suscipit!
+                The philosophy of Jiva or “Inner Life” is inherently rooted in
+                India’s ancient approach to wellness. Inspired by traditional
+                Indian healing wisdom, we believe that a spa unfolds the path of
+                life that opens out channels to nurture one’s life force. Jiva
+                embraces a deep understanding of mind, body and spirit; their
+                individual needs and their interdependences.
               </p>
               <button type="button" className="btn">
                 Know More
@@ -170,12 +162,13 @@ const Home = ({ DOMAIN }) => {
               <Icon icon="fa6-solid:broom" height="25" />
               <h2>Housekeeping</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Molestias blanditiis tempore officia accusamus asperiores. Illum
-                maxime eligendi necessitatibus laudantium iste nisi pariatur
-                doloremque ut illo similique voluptatum enim distinctio
-                perferendis, ad ipsam aspernatur omnis rem autem ex, reiciendis
-                corporis suscipit!
+                Our hotel teams are ready to assist to help ensure the safety
+                and well-being of everyone. As part of our continued efforts to
+                help our guests enjoy a relaxed stay with us, our hotel can
+                provide information on locally available medical assistance and
+                support.Our team can advise you on the nearest pharmacies and
+                stores to purchase personal protective equipment kits, masks,
+                and other medical necessities.
               </p>
               <button type="button" className="btn">
                 Know More
@@ -187,12 +180,14 @@ const Home = ({ DOMAIN }) => {
               <Icon icon="wpf:security-checked" height="40" />
               <h2>Room Security</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Molestias blanditiis tempore officia accusamus asperiores. Illum
-                maxime eligendi necessitatibus laudantium iste nisi pariatur
-                doloremque ut illo similique voluptatum enim distinctio
-                perferendis, ad ipsam aspernatur omnis rem autem ex, reiciendis
-                corporis suscipit!
+                The security of our guests is our utmost priority. Our personnel
+                are trained according to best global standards to conduct these
+                routines with utmost sensitivity and without discrimination .
+                The cooperation of our guests is highly appreciated and their
+                inconvenience is regretted.Your safety, security and comfort
+                remain at the heart of everything we do. Experience the
+                heartfelt warmth of our signature hospitality, strengthened with
+                the assurance of safety and hygiene.
               </p>
               <button type="button" className="btn">
                 Know More
@@ -202,7 +197,7 @@ const Home = ({ DOMAIN }) => {
         </div>
       </section>
 
-      <div className="book">
+      <div className="book" id="check">
         <form className="book-form">
           <div className="form-item">
             <label htmlFor="checkin-date">Check In Date: </label>
@@ -272,24 +267,14 @@ const Home = ({ DOMAIN }) => {
               </div>
               <div className="room-text">
                 <h3>{clas.class_name}</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Temporibus exercitationem repellendus maxime ullam tempore
-                  architecto provident unde expedita quam beatae, dolore
-                  eligendi molestias sint tenetur incidunt voluptas. Unde
-                  corporis qui iusto vitae. Aut nesciunt id iste, cum esse
-                  commodi nemo?
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-                  corporis quasi officiis cumque, fugiat nostrum sunt, tempora
-                  animi dicta laborum beatae ratione doloremque. Delectus odio
-                  sit eius labore, atque quo?
-                </p>
+                <p>{clas.description}</p>
                 <p className="rate">
-                  <span>${clas.class_price}.00 /</span> Per Night
+                  <span>₹{clas.class_price}.00 /</span> Per Night
                 </p>
-                <Link className="book-now-link" to={`/book?roomtype=${clas.class_name}`}>
+                <Link
+                  className="book-now-link"
+                  to={`/book?roomtype=${clas.class_name}`}
+                >
                   <button type="button" className="btn">
                     Book now
                   </button>
@@ -309,22 +294,30 @@ const Home = ({ DOMAIN }) => {
             <div className="customer">
               <h3>We Loved it</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-                beatae veritatis provident eveniet praesentium veniam cum iusto
-                distinctio esse, vero est autem, eius optio cupiditate?
+                <i>
+                  "Me and my wife checked in to Froyo Grande on our vacation. It
+                  is situated right in the middle of the Downtown area and has a
+                  very beautiful view of the city. We stayed in the hotel for 3
+                  nights and had a very comfortable stay like home. There are
+                  five restaurants and every place serves an exquisite cuisine."
+                </i>
               </p>
               <img src={cus1} />
-              <span className="cus-name">Customer Name, Country</span>
+              <span className="cus-name">Ajeyan, Tiruppur</span>
             </div>
             <div className="customer">
               <h3>Comfortable Living</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-                beatae veritatis provident eveniet praesentium veniam cum iusto
-                distinctio esse, vero est autem, eius optio cupiditate?
+                <i>
+                  "Our family were extremely impressed when we stayed at Froyo Grande
+                  recently.We had a wonderful stay at the hotel and
+                  the two gentlemen John and Harpal you are the face of the
+                  hotel. You have the greatest and amazing hospitality and the
+                  staff will go all way out in making your stay enjoyable."
+                </i>
               </p>
               <img src={cus2} />
-              <span className="cus-name">Customer Name, Country</span>
+              <span className="cus-name">Dharun, Coimbatore</span>
             </div>
           </div>
         </div>
@@ -334,37 +327,50 @@ const Home = ({ DOMAIN }) => {
           <div>
             <h2>About Us </h2>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
-              sapiente mollitia doloribus provident? Eos quisquam aliquid vel
-              dolorum, impedit culpa.
+              Froyo Grande is recognised the world over for delivering
+              exceptional hospitality, an amalgam of world-class refinement
+              inspired by the heritage and nobility of Indian traditions.
             </p>
-            <ul className="social-icons">
-              <li className="flex">
-                <i className="fa fa-twitter fa-2x"></i>
-              </li>
-              <li className="flex">
-                <i className="fa fa-facebook fa-2x"></i>
-              </li>
-              <li className="flex">
-                <i className="fa fa-instagram fa-2x"></i>
-              </li>
-            </ul>
           </div>
 
           <div>
             <h2>Useful Links</h2>
-            <a href="#">Blog</a>
-            <a href="#">Rooms</a>
-            <a href="#">Subscription</a>
-            <a href="#">Gift Card</a>
+            <a href="#">
+              <Icon icon="akar-icons:chevron-right" height="10" width="10" />
+              <span> </span>Blog
+            </a>
+            <a href="#">
+              <Icon icon="akar-icons:chevron-right" height="10" width="10" />
+              <span> </span>Rooms
+            </a>
+            <a href="#">
+              <Icon icon="akar-icons:chevron-right" height="10" width="10" />
+              <span> </span>Subscription
+            </a>
+            <a href="#">
+              <Icon icon="akar-icons:chevron-right" height="10" width="10" />
+              <span> </span>Gift Card
+            </a>
           </div>
 
           <div>
             <h2>Privacy</h2>
-            <a href="#">Career</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Services</a>
+            <a href="#">
+              <Icon icon="akar-icons:chevron-right" height="10" width="10" />
+              <span> </span>Career
+            </a>
+            <a href="#">
+              <Icon icon="akar-icons:chevron-right" height="10" width="10" />
+              <span> </span>About Us
+            </a>
+            <a href="#">
+              <Icon icon="akar-icons:chevron-right" height="10" width="10" />
+              <span> </span>Contact Us
+            </a>
+            <a href="#">
+              <Icon icon="akar-icons:chevron-right" height="10" width="10" />
+              <span> </span>Services
+            </a>
           </div>
 
           <div>
@@ -373,19 +379,17 @@ const Home = ({ DOMAIN }) => {
               <span>
                 <Icon icon="clarity:map-marker-solid" />
               </span>
-              <span>
-                203 Fake St.Mountain View, San Francisco, California, USA
-              </span>
+              <span>Coimbatore, Tamil Nadu</span>
             </div>
             <div className="contact-item">
               <span>
                 <Icon icon="bxs:phone" />
               </span>
-              <span>+84545 37534 48</span>
+              <span>+91 9585549396</span>
             </div>
             <div className="contact-item">
               <Icon icon="carbon:email" />
-              <span>info@domain.com</span>
+              <span>sri33arun@gmail.com</span>
             </div>
           </div>
         </div>

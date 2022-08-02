@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { styles } from "../styles/alogin.css";
 import axios from "axios";
 import { useState } from "react";
@@ -6,9 +6,11 @@ import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 const ALogin = ({ DOMAIN }) => {
   const navigate = useNavigate();
-  if (sessionStorage["authToken"] !== undefined) {
-    navigate("/admin/dashboard");
-  }
+  useEffect(()=>{
+    if (sessionStorage["authToken"] != undefined) {
+      window.location.href=window.location.origin + "/admin/dashboard";
+    }
+  },[window.location.href])
 
   const [data, setData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");

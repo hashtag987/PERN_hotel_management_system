@@ -16,7 +16,8 @@ table {
 table * {
   position: relative;
 }
-table td, table th {
+table td,
+table th {
   font-family: ser-con-btn;
   padding-left: 8px;
 }
@@ -27,28 +28,35 @@ table thead tr {
 }
 table tbody tr {
   height: 48px;
-  border-bottom: 1px solid #E3F1D5;
+  border-bottom: 1px solid #e3f1d5;
 }
 table tbody tr:last-child {
   border: 0;
 }
-table td, table th {
+table td,
+table th {
   text-align: left;
 }
-table td.l, table th.l {
+table td.l,
+table th.l {
   text-align: right;
 }
-table td.c, table th.c {
+table td.c,
+table th.c {
   text-align: center;
 }
-table td.r, table th.r {
+table td.r,
+table th.r {
   text-align: center;
 }
 @media screen and (max-width: 35.5em) {
   table {
     display: block;
   }
-  table > *, table tr, table td, table th {
+  table > *,
+  table tr,
+  table td,
+  table th {
     display: block;
   }
   table thead {
@@ -89,14 +97,14 @@ table td.r, table th.r {
   }
 }
 .dashboard {
-  font: 400 14px 'Calibri', 'Arial';
+  font: 400 14px "Calibri", "Arial";
   padding: 100px;
 }
 
-.adm-btn{
+.adm-btn {
   font-family: ser-con-btn;
   position: absolute;
-  top:30px;
+  top: 30px;
   right: 50px;
   background-color: none;
   border: none;
@@ -111,12 +119,60 @@ table td.r, table th.r {
   border-radius: 5px;
 }
 
-.isvaccant{
+.isvaccant {
   color: rgb(21, 158, 0);
   font-weight: 600;
 }
 
-.occupied{
+.occupied {
   color: rgb(148, 0, 0);
   font-weight: 600;
+}
+
+.checkout-btn {
+  text-transform: capitalize !important;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cards .card {
+  margin: 20px;
+}
+
+.main-dashboard h3 {
+  font-family: ser-con-btn;
+  font-size: 2.5rem;
+}
+
+.card-sub-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  padding: 20px 15px;
+}
+
+.filter-by-date {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.filter-by-date .input-filter {
+  width: 230px !important;
+  height: 100px !important;
+  margin: 10px;
+}
+.filter-by-date .filter-btn {
+  width: 100px !important;
+  height: 40px !important;
+  margin: 10px;
+}
+
+#cusid::-webkit-inner-spin-button,
+#cusid::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
 }

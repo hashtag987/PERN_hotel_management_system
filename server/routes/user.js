@@ -33,25 +33,7 @@ router.get("/available", async (req, res) => {
   }
 });
 
-router.put("/user/updateroom", async (req, res) => {
-  try {
-    const { roomno } = req.body;
-    const status = await pool.query(
-      "select isavailable from rooms where room_no = $1",
-      [roomno]
-    );
-    let room_stat = !status.rows[0].isavailable;
-    const updateroom = await pool.query(
-      "update rooms set isavailable = $1 where room_no = $2",
-      [room_stat, roomno]
-    );
-    res.json(status.rows);
-    // res.sendStatus(200).json(!status.rows)
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).send({ message: "Internal Server Error" });
-  }
-});
+
 
 router.post("/user/old/reservation", async (req, res) => {
   try {
@@ -72,6 +54,7 @@ router.post("/user/old/reservation", async (req, res) => {
       "select customer_id from customers where customer_id=$1",
       [customerid]
     );
+    // console.log(customerid)
     if (checkuser.rowCount == 0) {
       return res.status(404).send({ message: "Customer not found" });
     }
@@ -80,7 +63,7 @@ router.post("/user/old/reservation", async (req, res) => {
         if(err){
           console.log(err);
           res.status(404).send({message:"Internal Server Error 1 "})
-        }else if(rows.rows[0].roomcount<noofrooms){
+        }else if(rows.rowCount===0 || rows.rows[0].roomcount<noofrooms){
           res.status(404).send({message:"Rooms Not Available"})
         }else{
           pool.query(`select rooms.room_no from rooms join classes on rooms.class_id = classes.class_id where class_name = '${classtype.toLowerCase()}' and (isavailable = 't' or room_no in (select room_no from rooms join reservation on rooms.room_no = any(reservation.rooms) where date_out < '${checkin}' )) limit ${noofrooms}`,(err,rows)=>{
@@ -102,7 +85,7 @@ router.post("/user/old/reservation", async (req, res) => {
                         console.log(err);
                         res.status(404).send({ message: "Internal Server Error 4" });
                       }else{
-                        res.status(200).send({ message: "Booking success",data:rooms});
+                        res.status(200).send({ message: "Booking success",data:rooms,customerid:customerid});
                       }
                     })
                   }

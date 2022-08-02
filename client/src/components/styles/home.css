@@ -202,6 +202,7 @@ img{
     padding: 12px;
 }
 .navbar li a{
+    font-family: ser-con-btn;
     color: #fff;
     text-transform: capitalize;
     text-decoration: none;
@@ -216,7 +217,11 @@ img{
     padding-left: 12px;
 }
 .sign-up, .log-in{
+    text-transform: capitalize;
+    text-decoration: none;
+    font-family: ser-con-btn;
     background: var(--yellow);
+    width: 90%;
     color: #fff;
 }
 @media(max-width: 400px){
@@ -306,12 +311,12 @@ img{
 }
 
 .btn{
-    border-radius: 15px;
+    border-radius: 1px;
     background-color: var(--yellow);
     color: white;
 }
 
-.book-now-link{
+.book-now-link,.admin-login-link{
     text-decoration: none;
 }
 .book-form input[type = "submit"]{
@@ -333,7 +338,7 @@ img{
 .book-form input:not(.btn){
     margin: 4px 0 16px 0;
     padding: 12px 15px;
-    border-radius: 15px;
+    border-radius: 5px;
     font-size: 17px;
     border: none;
 }
@@ -563,7 +568,7 @@ img{
     cursor: pointer;
 }
 .social-icons li:hover{
-    background: #fff;
+    /* background: #4486ff; */
     color: #2e2e2e;
 }
 .contact-item span{

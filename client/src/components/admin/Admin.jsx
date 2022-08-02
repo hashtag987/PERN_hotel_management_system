@@ -8,25 +8,22 @@ import Reservation from "./components/Reservation";
 import Customers from "./components/Customers";
 import Rooms from "./components/Rooms";
 import Dashboard from "./components/Dashboard";
-import Payments from "./components/Payments";
 
-const Admin = () => {
+const Admin = ({DOMAIN}) => {
   const [inactive, setInactive] = useState(false);
   return (
     <div className="Admin">
           <SideMenu
             onCollapse={(inactive) => {
-              console.log(inactive);
               setInactive(inactive);
             }}
           />
           <div className={`container ${inactive ? "inactive" : ""}`}>
           <Routes>
-              <Route exact path="/dashboard" element={<Dashboard/>}/>
-              <Route exact path="/reservation" element={<Reservation/>}/>
-              <Route exact path="/customers" element={<Customers/>}/>
-              <Route exact path="/rooms" element={<Rooms/>}/>
-              <Route exact path="/payments" element={<Payments/>}/>
+              <Route exact path="/dashboard" element={<Dashboard DOMAIN={DOMAIN}/>}/>
+              <Route exact path="/reservation" element={<Reservation DOMAIN={DOMAIN}/>}/>
+              <Route exact path="/customers" element={<Customers DOMAIN={DOMAIN}/>}/>
+              <Route exact path="/rooms" element={<Rooms DOMAIN={DOMAIN}/>}/>
           </Routes>
           </div>
     </div>
